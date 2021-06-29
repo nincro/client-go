@@ -22,7 +22,7 @@ import (
 )
 
 func main() {
-	cli, err := rawkv.NewClient(context.TODO(), []string{"127.0.0.1:2379"}, config.Default())
+	cli, err := rawkv.NewClient(context.TODO(), []string{"10.131.154.231:2379"}, config.Default())
 	if err != nil {
 		panic(err)
 	}

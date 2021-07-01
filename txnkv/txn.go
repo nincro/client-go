@@ -42,7 +42,7 @@ type Transaction struct {
 
 func newTransaction(tikvStore *store.TiKVStore, ts uint64) *Transaction {
 	metrics.TxnCounter.Inc()
-
+	metrics.TxnCounterLocal.Inc()
 	snapshot := tikvStore.GetSnapshot(ts)
 	us := kv.NewUnionStore(&tikvStore.GetConfig().Txn, snapshot)
 	return &Transaction{

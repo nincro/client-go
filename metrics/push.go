@@ -30,6 +30,11 @@ import (
 //   `instance`.
 // * `job` is used to distinguish different workloads, DO NOT use too many `job`
 //   labels since there are grafana panels that groups by `job`.
+
+var (
+	oldCount int64
+)
+
 func PushMetrics(ctx context.Context, addr string, interval time.Duration, job, instance string) {
 	ticker := time.NewTicker(interval)
 	defer ticker.Stop()
@@ -40,7 +45,10 @@ func PushMetrics(ctx context.Context, addr string, interval time.Duration, job, 
 			return
 		case <-ticker.C:
 		}
-
+		count := TxnCounterLocal.Count
+		qps := count - oldCount
+		oldCount = count
+		log.Printf("qps:%d", qps)
 		err := push.New(addr, job).Grouping("instance", instance).Gatherer(prometheus.DefaultGatherer).Push()
 		if err != nil {
 			log.Errorf("cannot push metrics to prometheus pushgateway: %v", err)

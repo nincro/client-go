@@ -18,6 +18,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"github.com/tikv/client-go/metrics"
 	"log"
 	"math/rand"
 	"strings"
@@ -30,7 +31,7 @@ import (
 
 var (
 	pdAddr = flag.String("pd", "10.131.154.231:2379", "pd address")
-	mode   = flag.String("mode", "raw", "raw / txn")
+	mode   = flag.String("mode", "txn", "raw / txn")
 
 	pushAddr     = flag.String("push", "10.131.154.231:9090", "pushGateway address")
 	pushInterval = flag.Duration("interval", 15*time.Second, "push metrics interval")
@@ -179,7 +180,7 @@ func benchTxn() {
 func main() {
 	flag.Parse()
 
-	//go metrics.PushMetrics(context.TODO(), *pushAddr, *pushInterval, *pushJob, *pushInstance)
+	go metrics.PushMetrics(context.TODO(), *pushAddr, *pushInterval, *pushJob, *pushInstance)
 
 	switch *mode {
 	case "raw":

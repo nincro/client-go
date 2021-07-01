@@ -24,7 +24,6 @@ import (
 	"time"
 
 	"github.com/tikv/client-go/config"
-	"github.com/tikv/client-go/metrics"
 	"github.com/tikv/client-go/rawkv"
 	"github.com/tikv/client-go/txnkv"
 )
@@ -180,7 +179,7 @@ func benchTxn() {
 func main() {
 	flag.Parse()
 
-	go metrics.PushMetrics(context.TODO(), *pushAddr, *pushInterval, *pushJob, *pushInstance)
+	//go metrics.PushMetrics(context.TODO(), *pushAddr, *pushInterval, *pushJob, *pushInstance)
 
 	switch *mode {
 	case "raw":

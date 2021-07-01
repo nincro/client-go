@@ -30,10 +30,10 @@ import (
 )
 
 var (
-	pdAddr = flag.String("pd", "127.0.0.1:2379", "pd address")
+	pdAddr = flag.String("pd", "10.131.154.231:2379", "pd address")
 	mode   = flag.String("mode", "raw", "raw / txn")
 
-	pushAddr     = flag.String("push", "127.0.0.1:9090", "pushGateway address")
+	pushAddr     = flag.String("push", "10.131.154.231:9090", "pushGateway address")
 	pushInterval = flag.Duration("interval", 15*time.Second, "push metrics interval")
 	pushJob      = flag.String("job", "bench", "job name")
 	pushInstance = flag.String("instance", "bench1", "instance name")
